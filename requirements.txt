@@ -1,9 +1,11 @@
-scipy==1.14.1
-av==12.3.0
-wheel==0.44.0
-torch==2.4.0
-torchvision==0.19.0
-torchaudio==2.4.0
-jupyterlab==4.2.4
-opencv-python==4.10.0.84
+av
+torch
+torchvision
+torchaudio
+jupyterlab
+scipy
+opencv-python
+wheel
+transformers 
+-r ./LivePortrait/requirements.txt
 -e detectron2
