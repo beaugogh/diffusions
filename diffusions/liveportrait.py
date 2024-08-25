@@ -71,6 +71,6 @@ def main(driving=None, source=None, output_dir=None):
 
 if __name__ == "__main__":
     driving = osp.join(current_dir, "..", "assets", "liveportrait", "driving", "d3.mp4")
-    source = osp.join(current_dir, "..", "assets", "liveportrait", "source", "s1.jpg")
+    source = osp.join(current_dir, "..", "assets", "liveportrait", "source", "wukong5.jpg")
     output_dir = osp.join(current_dir, "..", "assets", "liveportrait", "animations")
     main(driving, source, output_dir)
