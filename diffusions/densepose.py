@@ -114,9 +114,9 @@ class DensePoseModel:
 
 if __name__ == "__main__":
     # example command: python apply_net.py show configs/densepose_rcnn_R_50_FPN_s1x.yaml models/densepose_rcnn_R_50_FPN_s1x.pkl images/frame_148.jpg dp_segm --output images/image_densepose_contour_output.png
-    model_path = "/home/bo/workspace/diffusions/models/densepose_rcnn_R_50_FPN_s1x.pkl"
-    config_path = "/home/bo/workspace/diffusions/Detectron2/projects/DensePose/configs/densepose_rcnn_R_50_FPN_s1x.yaml"
-    input_img_path = "/home/bo/workspace/diffusions/images/frame_156.jpg"
+    model_path = os.path.join(current_dir, "..", "models/densepose_rcnn_R_50_FPN_s1x.pkl")
+    config_path = os.path.join(densepose_dir, "configs/densepose_rcnn_R_50_FPN_s1x.yaml")
+    input_img_path = os.path.join(current_dir, "assets/images/frame_156.jpg")
     # available specs: dp_contour,dp_segm,dp_u,dp_v,dp_vertex,bbox
     specs = "dp_segm,bbox" 
     white_bkg = True
