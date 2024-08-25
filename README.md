@@ -15,7 +15,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Note: LivePortrait requirements include transformers, exlude that!
+Note: LivePortrait requirements include transformers, exclude that!
 
 
 ## Nvidia issues

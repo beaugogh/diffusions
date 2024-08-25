@@ -2,9 +2,9 @@ import os
 import sys
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-detectron2_dir = str(os.path.join(current_dir, "..", "detectron2"))
+detectron2_dir = str(os.path.join(current_dir, "..", "Detectron2"))
 densepose_dir = str(
-    os.path.join(current_dir, "..", "detectron2", "projects", "DensePose")
+    os.path.join(current_dir, "..", "Detectron2", "projects", "DensePose")
 )
 sys.path.insert(0, detectron2_dir)
 sys.path.insert(0, densepose_dir)
@@ -115,7 +115,7 @@ class DensePoseModel:
 if __name__ == "__main__":
     # example command: python apply_net.py show configs/densepose_rcnn_R_50_FPN_s1x.yaml models/densepose_rcnn_R_50_FPN_s1x.pkl images/frame_148.jpg dp_segm --output images/image_densepose_contour_output.png
     model_path = "/home/bo/workspace/diffusions/models/densepose_rcnn_R_50_FPN_s1x.pkl"
-    config_path = "/home/bo/workspace/diffusions/detectron2/projects/DensePose/configs/densepose_rcnn_R_50_FPN_s1x.yaml"
+    config_path = "/home/bo/workspace/diffusions/Detectron2/projects/DensePose/configs/densepose_rcnn_R_50_FPN_s1x.yaml"
     input_img_path = "/home/bo/workspace/diffusions/images/frame_156.jpg"
     # available specs: dp_contour,dp_segm,dp_u,dp_v,dp_vertex,bbox
     specs = "dp_segm,bbox" 

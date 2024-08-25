@@ -2,7 +2,7 @@ import os
 import sys
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-detectron2_dir = str(os.path.join(current_dir, "..", "detectron2"))
+detectron2_dir = str(os.path.join(current_dir, "..", "Detectron2"))
 sys.path.insert(0, detectron2_dir)
 
 import detectron2
@@ -144,7 +144,7 @@ def predict_and_save(cfg, model, input_path, output_path):
 
 
 if __name__ == "__main__":
-    input_path = "/home/bo/workspace/artdiffusion/54 JuJutsu Techniques _ Self Defence Syllabus _ Traditional Japanese Ju Jutsu Ryu_frames/frame_158.jpg"
+    input_path = "/home/bo/workspace/diffusions/videos/54JuJutsuTechniques_frames/frame_143.jpg"
     output_path = "./images/keypoints2.png"
     yaml_path = "COCO-Keypoints/keypoint_rcnn_R_50_FPN_3x.yaml"
     # yaml_path = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
