@@ -1,18 +1,22 @@
 import cv2
 import os
+import os.path as osp
+from tqdm import tqdm
 
 
-# Function to extract frames from a video until reaching the desired frame count
-def extract_video_frames(video_file):
-    cap = cv2.VideoCapture(video_file)
+# extract frames from a video
+def video_to_images(input_video_path, output_images_dir=None, fps=24):
+    cap = cv2.VideoCapture(input_video_path)
 
-    frame_rate = 24  # Desired frame rate (1 frame every 0.5 seconds)
+    # frame_rate = 24  # Desired frame rate (1 frame every 0.5 seconds)
+    frame_rate = fps
     frame_count = 0
 
-    video_name = os.path.splitext(os.path.basename(video_file))[0].split(".")[0]
-    video_dir = os.path.dirname(video_file)
-    output_dir = os.path.join(video_dir, f"{video_name}_frames")
-    os.makedirs(output_dir, exist_ok=True)
+    video_name = os.path.splitext(os.path.basename(input_video_path))[0].split(".")[0]
+    video_dir = os.path.dirname(input_video_path)
+    if not output_images_dir:
+        output_images_dir = os.path.join(video_dir, f"{video_name}_frames")
+    os.makedirs(output_images_dir, exist_ok=True)
 
     while True:
         ret, frame = cap.read()
@@ -23,7 +27,7 @@ def extract_video_frames(video_file):
 
         # Only extract frames at the desired frame rate
         if frame_count % int(cap.get(5) / frame_rate) == 0:
-            output_file = f"{output_dir}/frame_{frame_count}.jpg"
+            output_file = f"{output_images_dir}/frame_{frame_count}.jpg"
             cv2.imwrite(output_file, frame)
             print(f"Frame {frame_count} has been extracted and saved as {output_file}")
 
@@ -31,6 +35,25 @@ def extract_video_frames(video_file):
     cv2.destroyAllWindows()
 
 
+# compose images into a video
+def images_to_video(input_images_dir, output_video_path=None, fps=8):
+    if not output_video_path:
+        output_video_path = osp.join(input_images_dir, "output_vid.mp4")
+    imgs = sorted(os.listdir(input_images_dir))
+    first_img = cv2.imread(osp.join(input_images_dir, imgs[0]))
+    h, w, c = first_img.shape
+    size = (w, h)
+    print("img size: ", size)
+    out = cv2.VideoWriter(output_video_path, cv2.VideoWriter_fourcc(*"DIVX"), fps, size)
+
+    for filename in tqdm(imgs):
+        if ".mp4" not in filename:
+            img = cv2.imread(osp.join(input_images_dir, filename))
+            out.write(img)
+
+    out.release()
+
+
 if __name__ == "__main__":
-    video_path = r"/home/bo/workspace/diffusions/videos/54JuJutsuTechniques.mp4" 
-    extract_video_frames(video_path)
+    video_path = r"/home/bo/workspace/diffusions/videos/54JuJutsuTechniques.mp4"
+    video_to_images(video_path)
