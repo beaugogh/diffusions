@@ -98,8 +98,7 @@ def light_portrait(img_name='obama', draw_light_reference=False):
         Lab[:,:,0] = outputImg
         resultLab = cv2.cvtColor(Lab, cv2.COLOR_LAB2BGR)
         resultLab = cv2.resize(resultLab, (col, row))
-        cv2.imwrite(os.path.join(saveFolder, \
-             '{}_{:02d}.jpg'.format(img_name, i)), resultLab)
+        cv2.imwrite(os.path.join(saveFolder, '{}_{:02d}.jpg'.format(img_name, i)), resultLab)
 
 
 # imgs = os.listdir('./data/portraits/')

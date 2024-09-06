@@ -46,3 +46,11 @@ sudo apt install nvidia-modprobe
 sudo rmmod nvidia_uvm && sudo modprobe nvidia_uvm
 ```
 
+## TODOs
+
+* https://github.com/RVC-Boss/GPT-SoVITS
+* https://github.com/fishaudio/fish-speech
+  
+
+
+

@@ -34,7 +34,9 @@ def fast_check_args(args: ArgumentConfig):
         raise FileNotFoundError(f"driving info not found: {args.driving}")
 
 
-def main(driving=None, source=None, output_dir=None, mode="human"):
+def main(
+    driving=None, source=None, output_dir=None, mode="human", driving_multiplier=1.0
+):
     ###### default args ######
     # flag_use_half_precision: True
     # flag_crop_driving_video: False
@@ -71,6 +73,8 @@ def main(driving=None, source=None, output_dir=None, mode="human"):
     # set tyro theme
     tyro.extras.set_accent_color("bright_cyan")
     args = tyro.cli(ArgumentConfig)
+    args.driving_multiplier = driving_multiplier
+    # args.flag_stitching = False
 
     ffmpeg_dir = os.path.join(os.getcwd(), "ffmpeg")
     if osp.exists(ffmpeg_dir):
@@ -110,11 +114,19 @@ def main(driving=None, source=None, output_dir=None, mode="human"):
 
 
 if __name__ == "__main__":
-
-    driving = osp.join(current_dir, "..", "assets", "liveportrait", "driving", "d3.mp4")
+    driving = osp.join(
+        current_dir, "..", "assets", "liveportrait", "driving", "test-head1.pkl"
+    ) 
     source = osp.join(
-        current_dir, "..", "assets", "liveportrait", "source", "wukong4.jpg"
+        current_dir, "..", "assets", "liveportrait", "source", "s1.jpg"
     )
     output_dir = osp.join(current_dir, "..", "assets", "liveportrait", "animations")
-    mode = "animal"  # human, animal
-    main(driving, source, output_dir, mode=mode)
+    mode = "human"  # human, animal
+    driving_multiplier = 1.2
+    main(
+        driving=driving,
+        source=source,
+        output_dir=output_dir,
+        mode=mode,
+        driving_multiplier=driving_multiplier,
+    )
