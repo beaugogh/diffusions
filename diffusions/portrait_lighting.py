@@ -14,7 +14,6 @@ import numpy as np
 from tqdm import tqdm
 from torch.autograd import Variable
 import torch
-import time
 import cv2
 from PortraitLighting.utils.utils_SH import *
 import PortraitLighting.defineHourglass_512_gray_skip as pl_hourglass_512
