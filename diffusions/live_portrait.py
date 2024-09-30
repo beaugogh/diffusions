@@ -2,6 +2,7 @@
 import os
 import os.path as osp
 import sys
+from tqdm import tqdm
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 liveportrait_dir = str(os.path.join(current_dir, "..", "LivePortrait"))
@@ -115,14 +116,15 @@ def main(
 
 if __name__ == "__main__":
     driving = osp.join(
-        current_dir, "..", "assets", "liveportrait", "driving", "test-head1.pkl"
+        current_dir, "..", "assets", "live_portrait", "driving", "driving_beau2.mp4"
     ) 
     source = osp.join(
-        current_dir, "..", "assets", "liveportrait", "source", "s1.jpg"
+        current_dir, "..", "assets", "live_portrait", "source", "han.jpg"
     )
-    output_dir = osp.join(current_dir, "..", "assets", "liveportrait", "animations")
+    source = "/home/bo/workspace/diffusions/assets/live_portrait/source/杨乃文/ynw1-square-modified-out-squared.png"
+    output_dir = osp.join(current_dir, "..", "assets", "live_portrait", "animations")
     mode = "human"  # human, animal
-    driving_multiplier = 1.2
+    driving_multiplier = 1.1
     main(
         driving=driving,
         source=source,
@@ -130,3 +132,5 @@ if __name__ == "__main__":
         mode=mode,
         driving_multiplier=driving_multiplier,
     )
+
+

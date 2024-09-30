@@ -59,31 +59,32 @@ def generate_3d_normals(begin_angle, end_angle, clockwise=True, num=10, null_dim
 
 
 def generate_lighting():
-    output_dir = osp.join(asset_dir, "portraitlighting", "lighting_4")
+    output_dir = osp.join(asset_dir, "portraitlighting", "lighting_1")
+    output_dir = "/home/bo/workspace/diffusions/assets/temp_lighting"
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
 
     #############################################################
-    # lightings_1
-    # num_points = 240
-    # normals_xy = generate_3d_normals(0.5*np.pi, -1.5*np.pi, clockwise=True, num=num_points, null_dim='z')
-    # normals_yz = generate_3d_normals(-1*np.pi, 0.5*np.pi, clockwise=True, num=num_points, null_dim='x')
-    # normals_xz = generate_3d_normals(0.5*np.pi, 2*np.pi, clockwise=True, num=num_points, null_dim='y')
-    # normals = np.concatenate((normals_xy, normals_yz, normals_xz))
+    # lightings_1: rotate around z, then x, then y axis
+    num_points = 90
+    normals_xy = generate_3d_normals(0.5*np.pi, -1.5*np.pi, clockwise=True, num=num_points, null_dim='z')
+    normals_yz = generate_3d_normals(-1*np.pi, 0.5*np.pi, clockwise=True, num=num_points, null_dim='x')
+    normals_xz = generate_3d_normals(0.5*np.pi, 2*np.pi, clockwise=True, num=num_points, null_dim='y')
+    normals = np.concatenate((normals_xy, normals_yz, normals_xz, normals_xy, normals_yz, normals_xz, normals_xy, normals_yz, normals_xz, normals_xy, normals_yz, normals_xz, normals_xy, normals_yz, normals_xz, normals_xz, normals_xy, normals_yz, normals_xz, normals_xz, normals_xy, normals_yz, normals_xz))
 
-    # lightings_2
+    # lightings_2: rotate around z-axis
     # num_points = 120
     # normals = generate_3d_normals(np.pi, -1*np.pi, clockwise=True, num=num_points, null_dim='z')
 
-    # lightings_3
+    # lightings_3: rotate around x-axis
     # num_points = 120
     # normals = generate_3d_normals(-1*np.pi, np.pi, clockwise=True, num=num_points, null_dim='x')
 
-    # lightings_4
-    num_points = 120
-    normals = generate_3d_normals(
-        -0.5 * np.pi, 1.5 * np.pi, clockwise=True, num=num_points, null_dim="y"
-    )
+    # lightings_4: rotate around y-axis
+    # num_points = 120
+    # normals = generate_3d_normals(
+    #     -0.5 * np.pi, 1.5 * np.pi, clockwise=True, num=num_points, null_dim="y"
+    # )
     ############################################################
     shs = SH_basis(normals)
     for i, sh in tqdm(enumerate(shs)):
@@ -131,20 +132,23 @@ def _generate(model, Lab, inputL, col, row, sh, model_size="S"):
     return resultLab
 
 
-def generate_portrait_lighting(img_path, light_dir_or_path, output_dir, model_size="S"):
+def generate_portrait_lighting(img_path, light_dir_or_path, output_dir, model_size="S", model=None):
     img_name = osp.basename(img_path).split(".")[0]
     num_lightings = len(os.listdir(light_dir_or_path)) if osp.isdir(light_dir_or_path) else 1
 
     # load model
     if model_size == "S":
-        my_network = load_model_512()
+        if not model:
+            model = load_model_512()
         img_size = 512
     elif model_size == "L":
-        my_network = load_model_1024()
+        if not model:
+            model = load_model_1024()
         img_size = 1024
     else:
         raise Exception("unsupported model size")
 
+    my_network = model
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -169,7 +173,7 @@ def generate_portrait_lighting(img_path, light_dir_or_path, output_dir, model_si
     else:
         sh = np.loadtxt(light_dir_or_path)
         resultLab = _generate(my_network, Lab, inputL, col, row, sh, model_size)
-        cv2.imwrite(osp.join(output_dir, f"{img_name}.png", resultLab))
+        cv2.imwrite(osp.join(output_dir, f"{img_name}.png"), resultLab)
 
 
 if __name__ == "__main__":
@@ -178,11 +182,38 @@ if __name__ == "__main__":
 
     # step 2: generate images according to the lighting
     img_path = "/home/bo/workspace/diffusions/assets/liveportrait/source/han.jpg"
-    light_dir = "/home/bo/workspace/diffusions/PortraitLighting/data/example_light"
-    # light_dir = "/home/bo/workspace/diffusions/assets/portraitlighting/lightings_2"
-    output_dir = "/home/bo/workspace/diffusions/assets/portraitlighting/results1024"
-    generate_portrait_lighting(img_path, light_dir, output_dir, model_size="L")
+    img_path = "/home/bo/workspace/diffusions/assets/live_portrait/source/杨乃文/ynw1-square-modified-red-hair-.png"
+    light_dir_or_path = "/home/bo/workspace/diffusions/PortraitLighting/data/example_light"
+    light_dir_or_path = "/home/bo/workspace/diffusions/assets/portrait_lighting/lightings_4"
+    light_dir_or_path = "/home/bo/workspace/diffusions/assets/temp_lighting"
+    # light_dir_or_path = "/home/bo/workspace/diffusions/assets/portrait_lighting/lightings_1/rotate_light_02.txt"
+    # output_dir = "/home/bo/workspace/diffusions/assets/portraitlighting/results1024"
+    output_dir = "/home/bo/workspace/diffusions/assets/temp"
+    # generate_portrait_lighting(img_path, light_dir_or_path, output_dir, model_size="S")
 
     # step 3: compose images back to video
     # images_to_video(input_images_dir="/home/bo/workspace/diffusions/assets/portraitlighting/results1024")
     print("finished")
+
+    lns = []
+    for i in range(len(os.listdir(light_dir_or_path))):
+        ln = "rotate_light_{:02d}.txt".format(i)
+        lighting_path = osp.join(light_dir_or_path, ln)
+        lns.append(lighting_path)
+
+    imgs = []
+    img_dir = "/home/bo/workspace/diffusions/assets/live_portrait/animations/ynw1-square-modified-out-squared_frames"
+    for fn in sorted(os.listdir(img_dir)):
+        if ".jpg" in fn:
+            imgs.append(osp.join(img_dir, fn))
+
+   
+
+    lns = lns[0:len(imgs)]
+    assert len(lns) == len(imgs)
+
+    model = load_model_512()
+    for ln, img_path in tqdm(zip(lns, imgs)):
+        print("")
+        print(ln.split("/")[-1], img_path.split("/")[-1])
+        generate_portrait_lighting(img_path, ln, output_dir, model=model)
