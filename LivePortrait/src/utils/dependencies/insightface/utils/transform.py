@@ -65,7 +65,7 @@ def estimate_affine_matrix_3d23d(X, Y):
         P_Affine: (3, 4). Affine camera matrix (the third row is [0, 0, 0, 1]).
     '''
     X_homo = np.hstack((X, np.ones([X.shape[0],1]))) #n x 4
-    P = np.linalg.lstsq(X_homo, Y, rcond=-1)[0].T # Affine matrix. 3 x 4
+    P = np.linalg.lstsq(X_homo, Y)[0].T # Affine matrix. 3 x 4
     return P
 
 def P2sRt(P):

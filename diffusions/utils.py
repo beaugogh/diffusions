@@ -54,11 +54,25 @@ def images_to_video(input_images_dir, output_video_path=None, fps=8):
     out.release()
 
 
+
+def download_huggingface_repo(repo_id = "", target_dir = "/home/bo/Downloads"):
+    from huggingface_hub import snapshot_download
+    # example repo_ids:
+    # h94/IP-Adapter-FaceID
+    # lllyasviel/ControlNet-v1-1
+    # RunDiffusion/Juggernaut-XL-v9 
+    local_dir = os.path.join(target_dir, repo_id)
+    return_path = snapshot_download(repo_id=repo_id, local_dir=local_dir)
+    print("Repo downloaded at ", return_path)
+    
+
 if __name__ == "__main__":
     # video_path = r"/home/bo/workspace/diffusions/assets/live_portrait/animations/ynw1-square-modified-out-squared--driving_beau2.mp4"
     # output_dir = "/home/bo/workspace/diffusions/assets/live_portrait/animations/ynw1-square-modified-out-squared_frames"
     # video_to_images(video_path, output_images_dir=output_dir, fps=24)
 
-    images_dir = "/home/bo/workspace/diffusions/assets/temp"
-    output_path = "/home/bo/workspace/diffusions/assets/ynw.mp4"
-    images_to_video(images_dir, output_path, fps=29)
+    # images_dir = "/home/bo/workspace/diffusions/assets/temp"
+    # output_path = "/home/bo/workspace/diffusions/assets/ynw.mp4"
+    # images_to_video(images_dir, output_path, fps=29)
+
+    download_huggingface_repo(repo_id="h94/IP-Adapter-FaceID")
