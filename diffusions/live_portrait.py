@@ -116,12 +116,12 @@ def main(
 
 if __name__ == "__main__":
     driving = osp.join(
-        current_dir, "..", "assets", "live_portrait", "driving", "driving_beau2.mp4"
+        current_dir, "..", "assets", "live_portrait", "driving", "d6.pkl"
     ) 
+    driving = "/home/bo/Downloads/视频 2024-10-20 11 56 04.mov"
     source = osp.join(
-        current_dir, "..", "assets", "live_portrait", "source", "han.jpg"
+        current_dir, "..", "assets", "live_portrait", "source", "thomas.jpg"
     )
-    source = "/home/bo/workspace/diffusions/assets/live_portrait/source/杨乃文/ynw1-square-modified-out-squared.png"
     output_dir = osp.join(current_dir, "..", "assets", "live_portrait", "animations")
     mode = "human"  # human, animal
     driving_multiplier = 1.1
