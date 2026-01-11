@@ -1,0 +1,7 @@
+sentencepiece
+tokenizers
+transformers
+accelerate
+safetensors
+diffusers
+  

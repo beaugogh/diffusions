@@ -1,0 +1,14 @@
+model:
+  repo_id: /home/bo/workspace/models/black-forest-labs/FLUX.1-schnell
+
+runtime:
+  dtype: bfloat16
+  device: cuda
+  cpu_offload: true
+
+generation:
+  width: 1024
+  height: 1024
+  num_inference_steps: 20
+  guidance_scale: 3.5
+  max_sequence_length: 512
