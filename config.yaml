@@ -4,7 +4,7 @@ model:
 runtime:
   dtype: bfloat16
   device: cuda
-  cpu_offload: true
+  cpu_offload: false
 
 generation:
   width: 1024

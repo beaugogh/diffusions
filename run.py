@@ -9,6 +9,7 @@ if __name__ == "__main__":
         "model": {
             "repo_id": "/home/bo/workspace/models/black-forest-labs/FLUX.1-schnell"
         },
+        "runtime": {"cpu_offload": True},
         "generation": {
             "prompt": "a tiny astronaut hatching from an egg on the moon",
             "width": 1024,
